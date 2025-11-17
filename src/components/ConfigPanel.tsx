@@ -263,14 +263,14 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({ selectedNode, onClose, onUpda
   };
 
   return (
-    <div className={`w-96 border-l shadow-2xl h-full overflow-y-auto ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+    <div className={`w-80 md:w-96 border-l shadow-2xl h-full overflow-y-auto flex-shrink-0 ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
       {/* Header */}
-      <div className={`sticky top-0 backdrop-blur-md border-b p-5 flex items-center justify-between z-10 shadow-sm ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
-        <div className="flex items-center gap-3">
-          <div className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-lg ${isDark ? 'bg-gradient-to-br from-purple-600 to-pink-600' : 'bg-gradient-to-br from-purple-500 to-pink-500'}`}>
-            <Settings className="w-5 h-5 text-white" />
+      <div className={`sticky top-0 backdrop-blur-md border-b p-4 md:p-5 flex items-center justify-between z-10 shadow-sm ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+        <div className="flex items-center gap-2 md:gap-3 min-w-0">
+          <div className={`w-8 h-8 md:w-10 md:h-10 rounded-xl flex items-center justify-center shadow-lg flex-shrink-0 ${isDark ? 'bg-gradient-to-br from-purple-600 to-pink-600' : 'bg-gradient-to-br from-purple-500 to-pink-500'}`}>
+            <Settings className="w-4 h-4 md:w-5 md:h-5 text-white" />
           </div>
-          <h3 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-gray-800'}`}>
+          <h3 className={`text-lg md:text-xl font-bold truncate ${isDark ? 'text-white' : 'text-gray-800'}`}>
             Configuration
           </h3>
         </div>
@@ -283,12 +283,12 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({ selectedNode, onClose, onUpda
       </div>
 
       {/* Node Type Badge */}
-      <div className="p-5">
-        <div className={`rounded-2xl p-4 border-2 mb-6 ${isDark ? 'bg-gray-700 border-gray-600' : 'bg-gradient-to-r from-indigo-50 to-purple-50 border-indigo-200'}`}>
-          <div className={`text-sm font-medium mb-1 ${isDark ? 'text-indigo-400' : 'text-indigo-600'}`}>Type d'action</div>
-          <div className={`text-xl font-bold flex items-center gap-2 ${isDark ? 'text-gray-100' : 'text-gray-800'}`}>
-            {selectedNode.data.label}
-            <div className={`w-2 h-2 rounded-full animate-pulse ${isDark ? 'bg-teal-400' : 'bg-teal-500'}`} />
+      <div className="p-4 md:p-5">
+        <div className={`rounded-xl md:rounded-2xl p-3 md:p-4 border-2 mb-4 md:mb-6 ${isDark ? 'bg-gray-700 border-gray-600' : 'bg-gradient-to-r from-indigo-50 to-purple-50 border-indigo-200'}`}>
+          <div className={`text-xs md:text-sm font-medium mb-1 ${isDark ? 'text-indigo-400' : 'text-indigo-600'}`}>Type d'action</div>
+          <div className={`text-lg md:text-xl font-bold flex items-center gap-2 ${isDark ? 'text-gray-100' : 'text-gray-800'}`}>
+            <span className="truncate">{selectedNode.data.label}</span>
+            <div className={`w-2 h-2 rounded-full animate-pulse flex-shrink-0 ${isDark ? 'bg-teal-400' : 'bg-teal-500'}`} />
           </div>
         </div>
 

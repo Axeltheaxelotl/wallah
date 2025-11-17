@@ -193,36 +193,36 @@ const WorkflowBuilder: React.FC = () => {
   }, [onExport]);
 
   return (
-    <div className={`flex h-screen ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <div className={`flex h-screen w-screen overflow-hidden ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
       {/* Palette de nodes */}
       <NodePalette onAddNode={onAddNode} isDark={isDark} />
 
       {/* Canvas principal */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {/* Toolbar Premium */}
-        <div className={`backdrop-blur-xl border-b p-4 shadow-lg ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
-          <div className="flex items-center justify-between max-w-7xl mx-auto">
+        <div className={`backdrop-blur-xl border-b p-4 shadow-lg flex-shrink-0 ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+          <div className="flex items-center justify-between w-full gap-4">
             {/* Left: Workflow Name */}
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-3">
-                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg ${isDark ? 'bg-gradient-to-br from-indigo-600 to-purple-600' : 'bg-gradient-to-br from-indigo-500 to-purple-500'}`}>
-                  <Settings className="w-7 h-7 text-white" />
+            <div className="flex items-center gap-2 md:gap-4 min-w-0 flex-1">
+              <div className="flex items-center gap-2 md:gap-3">
+                <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0 ${isDark ? 'bg-gradient-to-br from-indigo-600 to-purple-600' : 'bg-gradient-to-br from-indigo-500 to-purple-500'}`}>
+                  <Settings className="w-5 h-5 md:w-7 md:h-7 text-white" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <input
                     type="text"
                     value={workflowName}
                     onChange={(e) => setWorkflowName(e.target.value)}
-                    className={`text-2xl font-bold border-none bg-transparent focus:outline-none focus:ring-2 focus:ring-blue-400 rounded-lg px-3 py-1 ${isDark ? 'text-white' : 'text-gray-900'}`}
+                    className={`text-lg md:text-2xl font-bold border-none bg-transparent focus:outline-none focus:ring-2 focus:ring-blue-400 rounded-lg px-2 md:px-3 py-1 ${isDark ? 'text-white' : 'text-gray-900'} w-full`}
                     placeholder="Mon workflow"
                   />
-                  <div className={`text-xs px-3 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Workflow Builder Matrix</div>
+                  <div className={`text-xs px-2 md:px-3 hidden md:block ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Workflow Builder Matrix</div>
                 </div>
               </div>
             </div>
 
             {/* Right: Action Buttons */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1 md:gap-2 flex-shrink-0">
               <button
                 onClick={toggle}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg border-2 ${isDark ? 'bg-gray-700 hover:bg-gray-600 text-yellow-300 border-gray-600 hover:border-yellow-400' : 'bg-white hover:bg-gray-50 text-gray-700 border-gray-200 hover:border-gray-300'}`}
@@ -338,23 +338,24 @@ const WorkflowBuilder: React.FC = () => {
         </div>
 
         {/* Stats Footer */}
-        <div className={`backdrop-blur-xl border-t px-6 py-3 shadow-lg ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
-          <div className="flex items-center justify-between max-w-7xl mx-auto">
-            <div className="flex items-center gap-6 text-sm">
-              <div className={`flex items-center gap-2 ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>
+        <div className={`backdrop-blur-xl border-t px-3 md:px-6 py-2 md:py-3 shadow-lg flex-shrink-0 ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+          <div className="flex items-center justify-between w-full">
+            <div className="flex items-center gap-3 md:gap-6 text-xs md:text-sm">
+              <div className={`flex items-center gap-1 md:gap-2 ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>
                 <div className={`w-2 h-2 rounded-full animate-pulse ${isDark ? 'bg-indigo-400' : 'bg-indigo-500'}`} />
                 <span className="font-medium">{nodes.length}</span>
-                <span className={isDark ? 'text-gray-400' : 'text-gray-500'}>actions</span>
+                <span className={`hidden sm:inline ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>actions</span>
               </div>
-              <div className={`flex items-center gap-2 ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>
+              <div className={`flex items-center gap-1 md:gap-2 ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>
                 <div className={`w-2 h-2 rounded-full animate-pulse ${isDark ? 'bg-purple-400' : 'bg-purple-500'}`} />
                 <span className="font-medium">{edges.length}</span>
-                <span className={isDark ? 'text-gray-400' : 'text-gray-500'}>connexions</span>
+                <span className={`hidden sm:inline ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>connexions</span>
               </div>
             </div>
-            <div className={`text-sm flex items-center gap-2 ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
+            <div className={`text-xs md:text-sm flex items-center gap-2 ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
               <div className={`w-2 h-2 rounded-full ${isDark ? 'bg-teal-400' : 'bg-teal-500'}`} />
-              Prêt pour le hackathon Matrix 🚀
+              <span className="hidden md:inline">Prêt pour le hackathon Matrix 🚀</span>
+              <span className="md:hidden">🚀</span>
             </div>
           </div>
         </div>
