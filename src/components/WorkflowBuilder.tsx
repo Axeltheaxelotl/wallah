@@ -19,7 +19,8 @@ import { TemplateGallery } from './TemplateGallery';
 import { ImportModal } from './ImportModal';
 import { MatrixNode, MatrixNodeType, NodeConfig, Workflow } from '../types/workflow';
 import { getNodeMetadata } from '../config/nodeTypes';
-import { Download, Upload, Save, Play, Settings, Plus, Copy, BookTemplate } from 'lucide-react';
+import { Download, Upload, Save, Play, Settings, Plus, Copy, BookTemplate, Moon, Sun } from 'lucide-react';
+import { useDarkMode } from '../hooks/useDarkMode';
 
 const nodeTypes: NodeTypes = {
   createRoom: CustomNode,
@@ -40,6 +41,7 @@ const WorkflowBuilder: React.FC = () => {
   const [showImport, setShowImport] = useState(false);
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
   const [reactFlowInstance, setReactFlowInstance] = useState<any>(null);
+  const { isDark, toggle } = useDarkMode();
 
   // Connexion entre nodes
   const onConnect = useCallback(
@@ -191,19 +193,19 @@ const WorkflowBuilder: React.FC = () => {
   }, [onExport]);
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
+    <div className={`flex h-screen ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
       {/* Palette de nodes */}
-      <NodePalette onAddNode={onAddNode} />
+      <NodePalette onAddNode={onAddNode} isDark={isDark} />
 
       {/* Canvas principal */}
       <div className="flex-1 flex flex-col">
         {/* Toolbar Premium */}
-        <div className="bg-white/80 backdrop-blur-xl border-b border-gray-200 p-4 shadow-lg">
+        <div className={`backdrop-blur-xl border-b p-4 shadow-lg ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
           <div className="flex items-center justify-between max-w-7xl mx-auto">
             {/* Left: Workflow Name */}
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg ${isDark ? 'bg-gradient-to-br from-indigo-600 to-purple-600' : 'bg-gradient-to-br from-indigo-500 to-purple-500'}`}>
                   <Settings className="w-7 h-7 text-white" />
                 </div>
                 <div>
@@ -211,10 +213,10 @@ const WorkflowBuilder: React.FC = () => {
                     type="text"
                     value={workflowName}
                     onChange={(e) => setWorkflowName(e.target.value)}
-                    className="text-2xl font-bold border-none bg-transparent focus:outline-none focus:ring-2 focus:ring-blue-400 rounded-lg px-3 py-1 transition-all"
+                    className={`text-2xl font-bold border-none bg-transparent focus:outline-none focus:ring-2 focus:ring-blue-400 rounded-lg px-3 py-1 ${isDark ? 'text-white' : 'text-gray-900'}`}
                     placeholder="Mon workflow"
                   />
-                  <div className="text-xs text-gray-500 px-3">Workflow Builder Matrix</div>
+                  <div className={`text-xs px-3 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Workflow Builder Matrix</div>
                 </div>
               </div>
             </div>
@@ -222,8 +224,15 @@ const WorkflowBuilder: React.FC = () => {
             {/* Right: Action Buttons */}
             <div className="flex items-center gap-2">
               <button
+                onClick={toggle}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg border-2 ${isDark ? 'bg-gray-700 hover:bg-gray-600 text-yellow-300 border-gray-600 hover:border-yellow-400' : 'bg-white hover:bg-gray-50 text-gray-700 border-gray-200 hover:border-gray-300'}`}
+                title={isDark ? 'Mode clair' : 'Mode sombre'}
+              >
+                {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              </button>
+              <button
                 onClick={() => setShowTemplates(true)}
-                className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white rounded-xl transition-all duration-200 shadow-md hover:shadow-xl transform hover:scale-105"
+                className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white rounded-xl transition-all duration-200 shadow-md hover:shadow-xl"
               >
                 <BookTemplate className="w-4 h-4" />
                 <span className="font-medium">Templates</span>
@@ -231,7 +240,7 @@ const WorkflowBuilder: React.FC = () => {
 
               <button
                 onClick={onImport}
-                className="flex items-center gap-2 px-5 py-2.5 bg-white hover:bg-gray-50 text-gray-700 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg border-2 border-gray-200 hover:border-gray-300"
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl shadow-md hover:shadow-lg border-2 transition-all ${isDark ? 'bg-gray-700 hover:bg-gray-600 text-gray-200 border-gray-600' : 'bg-white hover:bg-gray-50 text-gray-700 border-gray-200'}`}
               >
                 <Upload className="w-4 h-4" />
                 <span className="font-medium">Importer</span>
@@ -239,7 +248,7 @@ const WorkflowBuilder: React.FC = () => {
 
               <button
                 onClick={onExport}
-                className="flex items-center gap-2 px-5 py-2.5 bg-white hover:bg-gray-50 text-gray-700 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg border-2 border-gray-200 hover:border-gray-300"
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl shadow-md hover:shadow-lg border-2 transition-all ${isDark ? 'bg-gray-700 hover:bg-gray-600 text-gray-200 border-gray-600' : 'bg-white hover:bg-gray-50 text-gray-700 border-gray-200'}`}
               >
                 <Download className="w-4 h-4" />
                 <span className="font-medium">Exporter</span>
@@ -248,7 +257,7 @@ const WorkflowBuilder: React.FC = () => {
               {nodes.length > 0 && (
                 <button
                   onClick={onDuplicate}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-white hover:bg-gray-50 text-gray-700 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg border-2 border-gray-200 hover:border-gray-300"
+                  className={`flex items-center gap-2 px-5 py-2.5 rounded-xl shadow-md hover:shadow-lg border-2 transition-all ${isDark ? 'bg-gray-700 hover:bg-gray-600 text-gray-200 border-gray-600' : 'bg-white hover:bg-gray-50 text-gray-700 border-gray-200'}`}
                 >
                   <Copy className="w-4 h-4" />
                   <span className="font-medium">Dupliquer</span>
@@ -257,14 +266,14 @@ const WorkflowBuilder: React.FC = () => {
 
               <button
                 onClick={onSave}
-                className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-xl transition-all duration-200 shadow-md hover:shadow-xl transform hover:scale-105"
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl shadow-md hover:shadow-xl transition-all ${isDark ? 'bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700' : 'bg-gradient-to-r from-indigo-500 to-blue-500 hover:from-indigo-600 hover:to-blue-600'} text-white`}
               >
                 <Save className="w-4 h-4" />
                 <span className="font-medium">Sauvegarder</span>
               </button>
 
               <button
-                className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-xl transition-all duration-200 shadow-md hover:shadow-xl transform hover:scale-105"
+                className={`flex items-center gap-2 px-6 py-2.5 rounded-xl shadow-md hover:shadow-xl transition-all ${isDark ? 'bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700' : 'bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600'} text-white`}
                 title="Exécuter le workflow (à implémenter)"
               >
                 <Play className="w-5 h-5" />
@@ -288,12 +297,11 @@ const WorkflowBuilder: React.FC = () => {
             onDragOver={onDragOver}
             nodeTypes={nodeTypes}
             fitView
-            snapToGrid
-            snapGrid={[20, 20]}
+            className={isDark ? 'dark' : ''}
             defaultEdgeOptions={{
               animated: true,
               style: { 
-                stroke: '#3b82f6',
+                stroke: isDark ? '#818cf8' : '#6366f1',
                 strokeWidth: 2.5,
               },
             }}
@@ -302,26 +310,25 @@ const WorkflowBuilder: React.FC = () => {
               variant={BackgroundVariant.Dots} 
               gap={24} 
               size={2}
-              color="#cbd5e1"
+              color={isDark ? '#374151' : '#d1d5db'}
               className="opacity-40"
             />
             <Controls 
-              className="shadow-2xl !bg-white !border-gray-200 rounded-xl overflow-hidden"
+              className={`shadow-2xl rounded-xl overflow-hidden ${isDark ? '!bg-gray-800 !border-gray-700' : '!bg-white !border-gray-200'}`}
               showInteractive={false}
             />
           </ReactFlow>
 
-          {/* Empty State */}
           {nodes.length === 0 && (
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="text-center max-w-md animate-fade-in">
-                <div className="w-24 h-24 bg-gradient-to-br from-blue-100 to-purple-100 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl">
-                  <Plus className="w-12 h-12 text-blue-600" />
+              <div className="text-center max-w-md">
+                <div className={`w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl ${isDark ? 'bg-gray-800 border-2 border-gray-700' : 'bg-gradient-to-br from-indigo-100 to-purple-100 border-2 border-indigo-200'}`}>
+                  <Plus className={`w-12 h-12 ${isDark ? 'text-indigo-400' : 'text-indigo-600'}`} />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-700 mb-3">
+                <h3 className={`text-2xl font-bold mb-3 ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>
                   Commencez votre workflow
                 </h3>
-                <p className="text-gray-500 leading-relaxed">
+                <p className={`leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                   Glissez-déposez des actions depuis la palette de gauche<br/>
                   ou cliquez sur une action pour l'ajouter au canvas
                 </p>
@@ -331,22 +338,22 @@ const WorkflowBuilder: React.FC = () => {
         </div>
 
         {/* Stats Footer */}
-        <div className="bg-white/80 backdrop-blur-xl border-t border-gray-200 px-6 py-3 shadow-lg">
+        <div className={`backdrop-blur-xl border-t px-6 py-3 shadow-lg ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
           <div className="flex items-center justify-between max-w-7xl mx-auto">
             <div className="flex items-center gap-6 text-sm">
-              <div className="flex items-center gap-2 text-gray-700">
-                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
+              <div className={`flex items-center gap-2 ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>
+                <div className={`w-2 h-2 rounded-full animate-pulse ${isDark ? 'bg-indigo-400' : 'bg-indigo-500'}`} />
                 <span className="font-medium">{nodes.length}</span>
-                <span className="text-gray-500">actions</span>
+                <span className={isDark ? 'text-gray-400' : 'text-gray-500'}>actions</span>
               </div>
-              <div className="flex items-center gap-2 text-gray-700">
-                <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse" />
+              <div className={`flex items-center gap-2 ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>
+                <div className={`w-2 h-2 rounded-full animate-pulse ${isDark ? 'bg-purple-400' : 'bg-purple-500'}`} />
                 <span className="font-medium">{edges.length}</span>
-                <span className="text-gray-500">connexions</span>
+                <span className={isDark ? 'text-gray-400' : 'text-gray-500'}>connexions</span>
               </div>
             </div>
-            <div className="text-sm text-gray-400 flex items-center gap-2">
-              <div className="w-2 h-2 bg-green-500 rounded-full" />
+            <div className={`text-sm flex items-center gap-2 ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
+              <div className={`w-2 h-2 rounded-full ${isDark ? 'bg-teal-400' : 'bg-teal-500'}`} />
               Prêt pour le hackathon Matrix 🚀
             </div>
           </div>
@@ -359,6 +366,7 @@ const WorkflowBuilder: React.FC = () => {
           selectedNode={selectedNode}
           onClose={() => setSelectedNode(null)}
           onUpdate={onUpdateNodeConfig}
+          isDark={isDark}
         />
       )}
 

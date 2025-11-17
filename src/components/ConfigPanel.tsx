@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Settings, AlertTriangle } from 'lucide-react';
+import { X, Settings } from 'lucide-react';
 import { MatrixNode, NodeConfig } from '../types/workflow';
 import { FormInput, FormTextarea, FormSelect } from './FormInput';
 
@@ -7,9 +7,10 @@ interface ConfigPanelProps {
   selectedNode: MatrixNode | null;
   onClose: () => void;
   onUpdate: (nodeId: string, config: NodeConfig) => void;
+  isDark: boolean;
 }
 
-const ConfigPanel: React.FC<ConfigPanelProps> = ({ selectedNode, onClose, onUpdate }) => {
+const ConfigPanel: React.FC<ConfigPanelProps> = ({ selectedNode, onClose, onUpdate, isDark }) => {
   if (!selectedNode) return null;
 
   const [config, setConfig] = React.useState<NodeConfig>(selectedNode.data.config || {});
@@ -21,8 +22,8 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({ selectedNode, onClose, onUpda
   };
 
   const renderConfigFields = () => {
-    const inputClass = "w-full px-4 py-3 border-2 border-gray-200 rounded-xl bg-white/50 transition-all duration-200 hover:border-gray-300 focus:outline-none focus:ring-2 placeholder-gray-400";
-    const labelClass = "block text-sm font-semibold text-gray-700 mb-2";
+    const inputClass = `w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 ${isDark ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' : 'bg-white/50 border-gray-200 text-gray-900 placeholder-gray-400'}`;
+    const labelClass = `block text-sm font-semibold mb-2 ${isDark ? 'text-gray-200' : 'text-gray-700'}`;
     
     switch (selectedNode.type) {
       case 'createRoom':
@@ -52,18 +53,18 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({ selectedNode, onClose, onUpda
             </div>
 
             <div>
-              <label className={labelClass}>Parent Space <span className="text-gray-400 text-xs">(optionnel)</span></label>
+              <label className={labelClass}>Parent Space <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>(optionnel)</span></label>
               <input
                 type="text"
                 value={config.parentSpace || ''}
                 onChange={(e) => handleChange('parentSpace', e.target.value)}
-                className={`${inputClass} focus:ring-blue-400 focus:border-blue-400`}
+                className={`${inputClass} focus:ring-blue-400`}
                 placeholder="!spaceId:matrix.org"
               />
             </div>
 
             <div>
-              <label className={labelClass}>Membres à ajouter <span className="text-gray-400 text-xs">(un par ligne)</span></label>
+              <label className={labelClass}>Membres à ajouter <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>(un par ligne)</span></label>
               <textarea
                 value={config.members?.join('\n') || ''}
                 onChange={(e) => handleChange('members', e.target.value.split('\n').filter(Boolean))}
@@ -213,11 +214,11 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({ selectedNode, onClose, onUpda
                 placeholder="!roomId:matrix.org"
               />
             </div>
-            <div className="bg-red-50 border-2 border-red-200 rounded-2xl p-4 flex items-start gap-3">
-              <div className="text-red-500 mt-0.5">⚠️</div>
+            <div className={`border-2 rounded-2xl p-4 flex items-start gap-3 ${isDark ? 'bg-red-900/20 border-red-800' : 'bg-red-50 border-red-200'}`}>
+              <div className={isDark ? 'text-red-400' : 'text-red-500'}>⚠️</div>
               <div>
-                <p className="font-semibold text-red-800 mb-1">Action irréversible</p>
-                <p className="text-sm text-red-700">Cette action supprimera définitivement le salon et toutes ses données.</p>
+                <p className={`font-semibold mb-1 ${isDark ? 'text-red-300' : 'text-red-800'}`}>Action irréversible</p>
+                <p className={`text-sm ${isDark ? 'text-red-400' : 'text-red-700'}`}>Cette action supprimera définitivement le salon et toutes ses données.</p>
               </div>
             </div>
           </div>
@@ -253,7 +254,7 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({ selectedNode, onClose, onUpda
 
       default:
         return (
-          <div className="text-center py-8 text-gray-500">
+          <div className={`text-center py-8 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
             <div className="text-4xl mb-3">🤷</div>
             <p>Aucune configuration disponible</p>
           </div>
@@ -262,32 +263,32 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({ selectedNode, onClose, onUpda
   };
 
   return (
-    <div className="w-96 bg-gradient-to-br from-white to-gray-50 border-l border-gray-200 shadow-2xl h-full overflow-y-auto animate-slide-in-right">
+    <div className={`w-96 border-l shadow-2xl h-full overflow-y-auto ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
       {/* Header */}
-      <div className="sticky top-0 bg-white/95 backdrop-blur-md border-b border-gray-200 p-5 flex items-center justify-between z-10 shadow-sm">
+      <div className={`sticky top-0 backdrop-blur-md border-b p-5 flex items-center justify-between z-10 shadow-sm ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center shadow-lg">
+          <div className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-lg ${isDark ? 'bg-gradient-to-br from-purple-600 to-pink-600' : 'bg-gradient-to-br from-purple-500 to-pink-500'}`}>
             <Settings className="w-5 h-5 text-white" />
           </div>
-          <h3 className="text-xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
+          <h3 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-gray-800'}`}>
             Configuration
           </h3>
         </div>
         <button
           onClick={onClose}
-          className="p-2 hover:bg-red-50 rounded-xl transition-all duration-200 group"
+          className={`p-2 rounded-xl group transition-all ${isDark ? 'hover:bg-gray-700' : 'hover:bg-red-50'}`}
         >
-          <X className="w-5 h-5 text-gray-600 group-hover:text-red-600 transition-colors" />
+          <X className={`w-5 h-5 transition-colors ${isDark ? 'text-gray-400 group-hover:text-red-400' : 'text-gray-600 group-hover:text-red-600'}`} />
         </button>
       </div>
 
       {/* Node Type Badge */}
       <div className="p-5">
-        <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-4 border-2 border-blue-200 mb-6">
-          <div className="text-sm font-medium text-blue-600 mb-1">Type d'action</div>
-          <div className="text-xl font-bold text-gray-800 flex items-center gap-2">
+        <div className={`rounded-2xl p-4 border-2 mb-6 ${isDark ? 'bg-gray-700 border-gray-600' : 'bg-gradient-to-r from-indigo-50 to-purple-50 border-indigo-200'}`}>
+          <div className={`text-sm font-medium mb-1 ${isDark ? 'text-indigo-400' : 'text-indigo-600'}`}>Type d'action</div>
+          <div className={`text-xl font-bold flex items-center gap-2 ${isDark ? 'text-gray-100' : 'text-gray-800'}`}>
             {selectedNode.data.label}
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+            <div className={`w-2 h-2 rounded-full animate-pulse ${isDark ? 'bg-teal-400' : 'bg-teal-500'}`} />
           </div>
         </div>
 

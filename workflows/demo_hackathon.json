@@ -1,0 +1,131 @@
+{
+  "name": "Bonjour",
+  "nodes": [
+    {
+      "id": "createRoom-1",
+      "type": "createRoom",
+      "position": {
+        "x": 250,
+        "y": 50
+      },
+      "data": {
+        "label": "Créer Salon d'Équipe",
+        "type": "createRoom",
+        "config": {
+          "roomName": "☕ Salon Équipe Better 42",
+          "visibility": "public",
+          "members": []
+        }
+      }
+    },
+    {
+      "id": "sendMessage-1",
+      "type": "sendMessage",
+      "position": {
+        "x": 250,
+        "y": 200
+      },
+      "data": {
+        "label": "Message de Bienvenue",
+        "type": "sendMessage",
+        "config": {
+          "message": "skibidi toilette",
+          "format": "markdown",
+          "targetRoom": ""
+        }
+      }
+    },
+    {
+      "id": "inviteUser-1",
+      "type": "inviteUser",
+      "position": {
+        "x": 250,
+        "y": 350
+      },
+      "data": {
+        "label": "Inviter un Collègue",
+        "type": "inviteUser",
+        "config": {
+          "userId": "@judge:luxchat.lu",
+          "roomId": ""
+        }
+      }
+    },
+    {
+      "id": "waitTime-1",
+      "type": "waitTime",
+      "position": {
+        "x": 250,
+        "y": 500
+      },
+      "data": {
+        "label": "Pause 5 secondes",
+        "type": "waitTime",
+        "config": {
+          "duration": 5,
+          "unit": "seconds"
+        }
+      }
+    },
+    {
+      "id": "sendMessage-2",
+      "type": "sendMessage",
+      "position": {
+        "x": 250,
+        "y": 650
+      },
+      "data": {
+        "label": "Message de Confirmation",
+        "type": "sendMessage",
+        "config": {
+          "message": "bonjour 2",
+          "format": "markdown",
+          "targetRoom": ""
+        }
+      }
+    },
+    {
+      "id": "analyseStats-1",
+      "type": "analyseStats",
+      "position": {
+        "x": 250,
+        "y": 800
+      },
+      "data": {
+        "label": "Analyser Statistiques",
+        "type": "analyseStats",
+        "config": {
+          "statsType": "room",
+          "timeRange": "1h"
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "createRoom-1",
+      "target": "sendMessage-1"
+    },
+    {
+      "id": "e2",
+      "source": "sendMessage-1",
+      "target": "inviteUser-1"
+    },
+    {
+      "id": "e3",
+      "source": "inviteUser-1",
+      "target": "waitTime-1"
+    },
+    {
+      "id": "e4",
+      "source": "waitTime-1",
+      "target": "sendMessage-2"
+    },
+    {
+      "id": "e5",
+      "source": "sendMessage-2",
+      "target": "analyseStats-1"
+    }
+  ]
+}

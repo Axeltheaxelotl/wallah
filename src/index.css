@@ -15,13 +15,79 @@
       sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    @apply bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50;
   }
 
   #root {
     width: 100%;
     height: 100vh;
   }
+}
+
+/* ===== DARK MODE SUPPORT ===== */
+
+/* Scrollbar Dark Mode */
+.dark ::-webkit-scrollbar-track {
+  background: #1f2937;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #4b5563 0%, #374151 100%);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #6b7280 0%, #4b5563 100%);
+}
+
+/* React Flow Dark Mode */
+.dark .react-flow__background {
+  background: #111827;
+}
+
+.dark .react-flow__edge-path {
+  stroke: #6b7280;
+}
+
+.dark .react-flow__edge:hover .react-flow__edge-path {
+  stroke: #818cf8;
+}
+
+.dark .react-flow__edge.selected .react-flow__edge-path {
+  stroke: #818cf8;
+  filter: drop-shadow(0 0 6px rgba(129, 140, 248, 0.6));
+}
+
+.dark .react-flow__handle {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  border: 3px solid #374151;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+}
+
+.dark .react-flow__controls {
+  background: #1f2937;
+  border: 1px solid #374151;
+}
+
+.dark .react-flow__controls-button {
+  background: #1f2937;
+  border-bottom: 1px solid #374151;
+}
+
+.dark .react-flow__controls-button:hover {
+  background: #374151;
+}
+
+.dark .react-flow__controls-button svg {
+  fill: #9ca3af;
+}
+
+.dark .react-flow__attribution {
+  background: rgba(31, 41, 55, 0.9);
+  color: #9ca3af;
+}
+
+.dark .react-flow__node.selected {
+  box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.5),
+              0 10px 25px rgba(129, 140, 248, 0.3);
 }
 
 /* ===== REACT FLOW CUSTOM STYLING ===== */

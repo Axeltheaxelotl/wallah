@@ -38,11 +38,11 @@ const CustomNode = ({ data, type }: NodeProps<CustomNodeData>) => {
   const isConfigured = data.config && Object.keys(data.config).length > 0;
 
   return (
-    <div className="relative group cursor-move">
+    <div className="relative group">
       <Handle 
         type="target" 
         position={Position.Top} 
-        className="!w-3 !h-3 !bg-white !border-2 !border-gray-400 hover:!border-blue-500 hover:!bg-blue-500 transition-all"
+        className="!w-3 !h-3 !bg-white !border-2 !border-gray-400"
       />
       
       {/* Card avec effet glassmorphism */}
@@ -50,9 +50,7 @@ const CustomNode = ({ data, type }: NodeProps<CustomNodeData>) => {
         relative overflow-hidden
         min-w-[240px] rounded-2xl
         bg-gradient-to-br ${gradient}
-        shadow-xl hover:shadow-2xl
-        transform hover:scale-105 hover:-translate-y-1
-        transition-all duration-300 ease-out
+        shadow-xl
         border-2 border-white/30
       `}>
         
@@ -92,17 +90,12 @@ const CustomNode = ({ data, type }: NodeProps<CustomNodeData>) => {
             </div>
           )}
         </div>
-
-        {/* Effet de lumière au survol */}
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
-        </div>
       </div>
       
       <Handle 
         type="source" 
         position={Position.Bottom} 
-        className="!w-3 !h-3 !bg-white !border-2 !border-gray-400 hover:!border-blue-500 hover:!bg-blue-500 transition-all"
+        className="!w-3 !h-3 !bg-white !border-2 !border-gray-400"
       />
     </div>
   );

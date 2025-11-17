@@ -13,46 +13,39 @@ const iconMap = {
 
 interface NodePaletteProps {
   onAddNode: (type: MatrixNodeType) => void;
+  isDark: boolean;
 }
 
-const NodePalette: React.FC<NodePaletteProps> = ({ onAddNode }) => {
+const NodePalette: React.FC<NodePaletteProps> = ({ onAddNode, isDark }) => {
   return (
-    <div className="w-72 bg-gradient-to-br from-slate-50 to-blue-50 border-r border-gray-200 shadow-2xl h-full overflow-y-auto animate-slide-in-left">
+    <div className={`w-72 border-r shadow-2xl h-full overflow-y-auto ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
       {/* Header */}
-      <div className="p-6 border-b border-gray-200 bg-white/80 backdrop-blur-sm sticky top-0 z-10">
+      <div className={`p-6 border-b sticky top-0 z-10 backdrop-blur-sm ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
         <div className="flex items-center gap-3 mb-2">
-          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+          <div className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-lg ${isDark ? 'bg-gradient-to-br from-indigo-600 to-purple-600' : 'bg-gradient-to-br from-indigo-500 to-purple-500'}`}>
             <Plus className="w-6 h-6 text-white" />
           </div>
-          <h2 className="text-xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
+          <h2 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-gray-800'}`}>
             Actions Matrix
           </h2>
         </div>
-        <p className="text-sm text-gray-600">
+        <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
           ✨ Glisser-déposer sur le canvas ou cliquer
         </p>
       </div>
 
       {/* Node Types */}
       <div className="p-4 space-y-3">
-        {NODE_TYPES.map((nodeType, index) => {
+        {NODE_TYPES.map((nodeType) => {
           const IconComponent = iconMap[nodeType.icon as keyof typeof iconMap];
           
           return (
             <div
               key={nodeType.type}
               className="group relative"
-              style={{ animationDelay: `${index * 50}ms` }}
             >
               <div
-                className={`
-                  p-4 rounded-xl cursor-move
-                  bg-white border-2 border-gray-200
-                  hover:border-blue-400 hover:shadow-xl
-                  active:scale-95
-                  transition-all duration-300 ease-out
-                  transform hover:-translate-y-1
-                `}
+                className={`p-4 rounded-xl cursor-move border-2 transition-all ${isDark ? 'bg-gray-700 border-gray-600 hover:border-indigo-500 hover:shadow-lg hover:shadow-indigo-500/20' : 'bg-white border-gray-200 hover:border-indigo-400 hover:shadow-xl'}`}
                 draggable
                 onDragStart={(event) => {
                   event.dataTransfer.setData('application/reactflow', nodeType.type);
@@ -60,26 +53,18 @@ const NodePalette: React.FC<NodePaletteProps> = ({ onAddNode }) => {
                 }}
                 onClick={() => onAddNode(nodeType.type)}
               >
-                {/* Gradient Overlay */}
-                <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-blue-50/50 to-purple-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                
-                {/* Content */}
-                <div className="relative flex items-start gap-3">
+                <div className="flex items-start gap-3">
                   {/* Icon */}
-                  <div className={`
-                    ${nodeType.color} p-3 rounded-xl shadow-md
-                    group-hover:shadow-lg group-hover:scale-110
-                    transition-all duration-300
-                  `}>
+                  <div className={`${nodeType.color} p-3 rounded-xl shadow-md`}>
                     <IconComponent className="w-5 h-5 text-white" />
                   </div>
                   
                   {/* Text */}
                   <div className="flex-1 min-w-0">
-                    <div className="font-bold text-gray-800 text-sm mb-1">
+                    <div className={`font-bold text-sm mb-1 ${isDark ? 'text-gray-100' : 'text-gray-800'}`}>
                       {nodeType.label}
                     </div>
-                    <div className="text-xs text-gray-600 leading-relaxed">
+                    <div className={`text-xs leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
                       {nodeType.description}
                     </div>
                   </div>
@@ -91,10 +76,10 @@ const NodePalette: React.FC<NodePaletteProps> = ({ onAddNode }) => {
       </div>
 
       {/* Footer Tip */}
-      <div className="p-4 m-4 bg-blue-50 border-2 border-blue-200 rounded-xl">
+      <div className={`p-4 m-4 border-2 rounded-xl ${isDark ? 'bg-gray-700 border-gray-600' : 'bg-indigo-50 border-indigo-200'}`}>
         <div className="flex items-start gap-2">
-          <div className="text-blue-500 mt-0.5">💡</div>
-          <div className="text-xs text-blue-800">
+          <div className={isDark ? 'text-indigo-400' : 'text-indigo-500'}>💡</div>
+          <div className={`text-xs ${isDark ? 'text-gray-300' : 'text-indigo-800'}`}>
             <strong>Astuce :</strong> Connectez les actions en glissant depuis les points de connexion
           </div>
         </div>
