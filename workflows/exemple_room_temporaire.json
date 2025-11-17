@@ -1,0 +1,88 @@
+{
+  "id": "workflow-1731849700000",
+  "name": "Room Temporaire Auto-Destructible",
+  "description": "Crée un salon, envoie un message, attend 1h puis le détruit automatiquement",
+  "nodes": [
+    {
+      "id": "createRoom-temp-001",
+      "type": "createRoom",
+      "position": {
+        "x": 250,
+        "y": 100
+      },
+      "data": {
+        "label": "Create Room",
+        "config": {
+          "roomName": "Discussion Temporaire - Hackathon",
+          "visibility": "private",
+          "members": [
+            "@participant1:luxchat.lu",
+            "@participant2:luxchat.lu",
+            "@participant3:luxchat.lu"
+          ]
+        }
+      }
+    },
+    {
+      "id": "sendMessage-temp-002",
+      "type": "sendMessage",
+      "position": {
+        "x": 250,
+        "y": 300
+      },
+      "data": {
+        "label": "Send Message",
+        "config": {
+          "message": "⚠️ Ce salon sera automatiquement supprimé dans 1 heure.\n\nUtilisez-le pour vos discussions temporaires du hackathon !",
+          "format": "markdown"
+        }
+      }
+    },
+    {
+      "id": "waitTime-temp-003",
+      "type": "waitTime",
+      "position": {
+        "x": 250,
+        "y": 500
+      },
+      "data": {
+        "label": "Wait Time",
+        "config": {
+          "duration": 1,
+          "unit": "hours"
+        }
+      }
+    },
+    {
+      "id": "destroyRoom-temp-004",
+      "type": "destroyRoom",
+      "position": {
+        "x": 250,
+        "y": 700
+      },
+      "data": {
+        "label": "Destroy Room",
+        "config": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-temp-1",
+      "source": "createRoom-temp-001",
+      "target": "sendMessage-temp-002"
+    },
+    {
+      "id": "edge-temp-2",
+      "source": "sendMessage-temp-002",
+      "target": "waitTime-temp-003"
+    },
+    {
+      "id": "edge-temp-3",
+      "source": "waitTime-temp-003",
+      "target": "destroyRoom-temp-004"
+    }
+  ],
+  "createdAt": "2025-11-17T15:00:00.000Z",
+  "updatedAt": "2025-11-17T15:00:00.000Z"
+}

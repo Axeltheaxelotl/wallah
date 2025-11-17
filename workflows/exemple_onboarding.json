@@ -1,0 +1,90 @@
+{
+  "id": "workflow-1731849600000",
+  "name": "Onboarding Automatique Nouveaux Membres",
+  "description": "Workflow qui crée un salon de bienvenue, envoie un message et ajoute des stats",
+  "nodes": [
+    {
+      "id": "createRoom-1731849601234",
+      "type": "createRoom",
+      "position": {
+        "x": 250,
+        "y": 100
+      },
+      "data": {
+        "label": "Create Room",
+        "config": {
+          "roomName": "Bienvenue dans l'équipe !",
+          "visibility": "private",
+          "members": [
+            "@alice:luxchat.lu",
+            "@bob:luxchat.lu"
+          ]
+        }
+      }
+    },
+    {
+      "id": "sendMessage-1731849602345",
+      "type": "sendMessage",
+      "position": {
+        "x": 250,
+        "y": 300
+      },
+      "data": {
+        "label": "Send Message",
+        "config": {
+          "message": "🎉 Bienvenue dans l'équipe !\n\nNous sommes ravis de vous accueillir.\n\nN'hésitez pas à poser vos questions !",
+          "format": "markdown"
+        }
+      }
+    },
+    {
+      "id": "waitTime-1731849603456",
+      "type": "waitTime",
+      "position": {
+        "x": 250,
+        "y": 500
+      },
+      "data": {
+        "label": "Wait Time",
+        "config": {
+          "duration": 5,
+          "unit": "seconds"
+        }
+      }
+    },
+    {
+      "id": "analyseStats-1731849604567",
+      "type": "analyseStats",
+      "position": {
+        "x": 250,
+        "y": 700
+      },
+      "data": {
+        "label": "Analyse Stats",
+        "config": {
+          "statsType": "roomActivity",
+          "timeRange": "24h"
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-1",
+      "source": "createRoom-1731849601234",
+      "target": "sendMessage-1731849602345"
+    },
+    {
+      "id": "edge-2",
+      "source": "sendMessage-1731849602345",
+      "target": "waitTime-1731849603456"
+    },
+    {
+      "id": "edge-3",
+      "source": "waitTime-1731849603456",
+      "target": "analyseStats-1731849604567"
+    }
+  ],
+  "createdAt": "2025-11-17T14:00:00.000Z",
+  "updatedAt": "2025-11-17T14:30:00.000Z"
+}
