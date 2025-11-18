@@ -252,6 +252,122 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({ selectedNode, onClose, onUpda
           </div>
         );
 
+      case 'split':
+        return (
+          <div className="space-y-5">
+            <div>
+              <label className={labelClass}>Type de condition</label>
+              <select
+                value={config.conditionType || 'messageContent'}
+                onChange={(e) => handleChange('conditionType', e.target.value)}
+                className={`${inputClass} focus:ring-cyan-400 focus:border-cyan-400 cursor-pointer`}
+              >
+                <option value="messageContent">💬 Contenu du message</option>
+                <option value="userCount">👥 Nombre d'utilisateurs</option>
+                <option value="custom">⚙️ Condition personnalisée</option>
+              </select>
+            </div>
+
+            <div>
+              <label className={labelClass}>Condition principale</label>
+              <textarea
+                value={config.condition || ''}
+                onChange={(e) => handleChange('condition', e.target.value)}
+                className={`${inputClass} focus:ring-cyan-400 focus:border-cyan-400 resize-none`}
+                rows={3}
+                placeholder="Ex: message contient 'oui' OU userCount > 10"
+              />
+            </div>
+
+            <div>
+              <label className={labelClass}>Branches conditionnelles</label>
+              <div className="space-y-3">
+                {(config.branches || []).map((branch: any, index: number) => (
+                  <div key={index} className={`p-4 border-2 rounded-xl ${isDark ? 'bg-gray-700 border-gray-600' : 'bg-cyan-50 border-cyan-200'}`}>
+                    <div className="flex justify-between items-start mb-3">
+                      <span className={`text-sm font-semibold ${isDark ? 'text-cyan-300' : 'text-cyan-700'}`}>
+                        Branche {index + 1}
+                      </span>
+                      <button
+                        onClick={() => {
+                          const newBranches = [...(config.branches || [])];
+                          newBranches.splice(index, 1);
+                          handleChange('branches', newBranches);
+                        }}
+                        className={`text-xs px-2 py-1 rounded ${isDark ? 'bg-red-600 hover:bg-red-700 text-white' : 'bg-red-500 hover:bg-red-600 text-white'}`}
+                      >
+                        Supprimer
+                      </button>
+                    </div>
+                    <div className="space-y-2">
+                      <input
+                        type="text"
+                        value={branch.name || ''}
+                        onChange={(e) => {
+                          const newBranches = [...(config.branches || [])];
+                          newBranches[index] = { ...branch, name: e.target.value };
+                          handleChange('branches', newBranches);
+                        }}
+                        className={`w-full text-sm px-3 py-2 border rounded-lg ${isDark ? 'bg-gray-600 border-gray-500 text-white' : 'bg-white border-gray-300'}`}
+                        placeholder="Nom de la branche"
+                      />
+                      <input
+                        type="text"
+                        value={branch.condition || ''}
+                        onChange={(e) => {
+                          const newBranches = [...(config.branches || [])];
+                          newBranches[index] = { ...branch, condition: e.target.value };
+                          handleChange('branches', newBranches);
+                        }}
+                        className={`w-full text-sm px-3 py-2 border rounded-lg ${isDark ? 'bg-gray-600 border-gray-500 text-white' : 'bg-white border-gray-300'}`}
+                        placeholder="Condition (ex: == 'oui')"
+                      />
+                      <select
+                        value={branch.color || 'blue'}
+                        onChange={(e) => {
+                          const newBranches = [...(config.branches || [])];
+                          newBranches[index] = { ...branch, color: e.target.value };
+                          handleChange('branches', newBranches);
+                        }}
+                        className={`w-full text-sm px-3 py-2 border rounded-lg ${isDark ? 'bg-gray-600 border-gray-500 text-white' : 'bg-white border-gray-300'}`}
+                      >
+                        <option value="blue">🔵 Bleu</option>
+                        <option value="green">🟢 Vert</option>
+                        <option value="red">🔴 Rouge</option>
+                        <option value="yellow">🟡 Jaune</option>
+                        <option value="purple">🟣 Violet</option>
+                      </select>
+                    </div>
+                  </div>
+                ))}
+                <button
+                  onClick={() => {
+                    const newBranches = [...(config.branches || []), {
+                      name: `Branche ${(config.branches?.length || 0) + 1}`,
+                      condition: '',
+                      color: 'blue'
+                    }];
+                    handleChange('branches', newBranches);
+                  }}
+                  className={`w-full py-3 border-2 border-dashed rounded-xl text-sm font-medium transition-all ${isDark ? 'border-cyan-600 text-cyan-400 hover:bg-cyan-900/20' : 'border-cyan-300 text-cyan-600 hover:bg-cyan-50'}`}
+                >
+                  + Ajouter une branche
+                </button>
+              </div>
+            </div>
+
+            <div className={`border-2 rounded-xl p-4 flex items-start gap-3 ${isDark ? 'bg-cyan-900/20 border-cyan-800' : 'bg-cyan-50 border-cyan-200'}`}>
+              <div className={isDark ? 'text-cyan-400' : 'text-cyan-600'}>💡</div>
+              <div>
+                <p className={`font-semibold mb-1 ${isDark ? 'text-cyan-300' : 'text-cyan-800'}`}>Fonctionnement</p>
+                <p className={`text-sm ${isDark ? 'text-cyan-400' : 'text-cyan-700'}`}>
+                  Le workflow évaluera la condition et suivra la branche correspondante. Connectez chaque branche à différentes actions.
+                </p>
+              </div>
+            </div>
+          </div>
+        );
+
       default:
         return (
           <div className={`text-center py-8 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>

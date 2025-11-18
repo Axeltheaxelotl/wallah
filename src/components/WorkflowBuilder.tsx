@@ -30,6 +30,7 @@ const nodeTypes: NodeTypes = {
   analyseStats: CustomNode,
   destroyRoom: CustomNode,
   webhookTrigger: CustomNode,
+  split: CustomNode,
 };
 
 const WorkflowBuilder: React.FC = () => {

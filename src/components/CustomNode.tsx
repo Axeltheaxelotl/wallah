@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { Handle, Position, NodeProps } from 'reactflow';
 import { 
   Plus, UserPlus, MessageSquare, Clock, 
-  BarChart, Trash2, Webhook, Check 
+  BarChart, Trash2, Webhook, Check, GitBranch
 } from 'lucide-react';
 import { MatrixNodeType } from '../types/workflow';
 
@@ -14,6 +14,7 @@ const iconMap = {
   analyseStats: BarChart,
   destroyRoom: Trash2,
   webhookTrigger: Webhook,
+  split: GitBranch,
 };
 
 const gradientMap = {
@@ -24,6 +25,7 @@ const gradientMap = {
   analyseStats: 'from-pink-500 via-pink-600 to-pink-700',
   destroyRoom: 'from-red-500 via-red-600 to-red-700',
   webhookTrigger: 'from-indigo-500 via-indigo-600 to-indigo-700',
+  split: 'from-cyan-500 via-cyan-600 to-cyan-700',
 };
 
 interface CustomNodeData {

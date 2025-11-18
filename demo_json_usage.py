@@ -2,7 +2,6 @@
 """
 DÉMONSTRATION : Comment le Backend Utilise Ton JSON
 
-Ce script montre EXACTEMENT comment Timo va utiliser
 le fichier demo_hackathon.json que tu as créé.
 """
 
@@ -16,7 +15,7 @@ print("=" * 60)
 print("\n📖 ÉTAPE 1 : Lire le fichier JSON...")
 print("-" * 60)
 
-with open('workflows/demo_hackathon.json', 'r', encoding='utf-8') as f:
+with open('workflows/test_split.json', 'r', encoding='utf-8') as f:
     workflow = json.load(f)
 
 print(f"✅ JSON chargé avec succès !")
@@ -84,6 +83,17 @@ for node in workflow['nodes']:
         print(f"   → Analyse: {stats_type}")
         print(f"   → Période: {time_range}")
         print(f"   ✅ Stats récupérées (simulé)")
+    
+    elif node_type == 'split':
+        condition = config.get('condition', 'N/A')
+        condition_type = config.get('conditionType', 'N/A')
+        branches = config.get('branches', [])
+        print(f"   → Type de condition: {condition_type}")
+        print(f"   → Condition: {condition}")
+        print(f"   → Nombre de branches: {len(branches)}")
+        for i, branch in enumerate(branches):
+            print(f"     Branche {i+1}: {branch.get('name', 'Sans nom')} ({branch.get('condition', 'N/A')})")
+        print(f"   ✅ Split configuré (simulé)")
 
 # 4️⃣ ÉTAPE 4 : Afficher l'ordre d'exécution
 print("\n🔗 ÉTAPE 4 : Ordre d'exécution (depuis les edges)...")
@@ -115,5 +125,5 @@ Tu crées visuellement → JSON est généré → Backend l'utilise → Magic !
 """)
 
 print("\n🎯 Le JSON est ESSENTIEL pour faire le lien entre:")
-print("   Frontend (toi) ←→ JSON ←→ Backend (Timo) ←→ Luxchat")
+print("   Frontend (toi) ←→ JSON ←→ Backend  ←→ Luxchat")
 print("\n" + "=" * 60)

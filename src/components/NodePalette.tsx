@@ -2,13 +2,13 @@ import React from 'react';
 import { NODE_TYPES } from '../config/nodeTypes';
 import { 
   Plus, UserPlus, MessageSquare, Clock, 
-  BarChart, Trash2, Webhook 
+  BarChart, Trash2, Webhook, GitBranch
 } from 'lucide-react';
 import { MatrixNodeType } from '../types/workflow';
 
 const iconMap = {
   Plus, UserPlus, MessageSquare, Clock, 
-  BarChart, Trash2, Webhook
+  BarChart, Trash2, Webhook, GitBranch
 };
 
 interface NodePaletteProps {

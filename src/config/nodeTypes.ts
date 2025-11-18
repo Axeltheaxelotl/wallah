@@ -37,6 +37,13 @@ export const NODE_TYPES: NodeTypeMetadata[] = [
     color: 'bg-orange-500'
   },
   {
+    type: 'split',
+    label: 'Split Flow',
+    description: 'Diviser le workflow en branches conditionnelles',
+    icon: 'GitBranch',
+    color: 'bg-cyan-500'
+  },
+  {
     type: 'destroyRoom',
     label: 'Destroy Room',
     description: 'Supprimer un salon',

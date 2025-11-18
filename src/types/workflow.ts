@@ -6,7 +6,8 @@ export type MatrixNodeType =
   | 'waitTime'
   | 'analyseStats'
   | 'destroyRoom'
-  | 'webhookTrigger';
+  | 'webhookTrigger'
+  | 'split';
 
 // Configuration pour chaque type de node
 export interface NodeConfig {
@@ -37,6 +38,15 @@ export interface NodeConfig {
   webhookUrl?: string;
   method?: 'GET' | 'POST';
   headers?: Record<string, string>;
+  
+  // Split Node
+  condition?: string;
+  conditionType?: 'messageContent' | 'userCount' | 'custom';
+  branches?: Array<{
+    name: string;
+    condition: string;
+    color: string;
+  }>;
 }
 
 // Node personnalisé avec sa config

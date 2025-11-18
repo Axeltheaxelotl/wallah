@@ -67,7 +67,6 @@ for node in workflow['nodes']:
 ```
 
 ### Exécution Complète
-Voir le code dans **MESSAGE_POUR_TIMO.md**
 
 ## 📊 Structure du JSON
 
@@ -198,7 +197,7 @@ room_id = config.get('targetRoom') or context.get('last_room_id')  # Récupère
 # Bryan montre le frontend
 # "Voici notre workflow builder..."
 
-# Timo exécute le backend
+#xécute le backend
 python execute_workflow.py
 
 # Le salon apparaît dans Luxchat en temps réel !

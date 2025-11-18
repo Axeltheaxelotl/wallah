@@ -1,0 +1,74 @@
+{
+  "name": "Test Split Workflow",
+  "nodes": [
+    {
+      "id": "start-1",
+      "type": "createRoom",
+      "position": { "x": 250, "y": 50 },
+      "data": {
+        "label": "Créer Salon Test",
+        "type": "createRoom",
+        "config": {
+          "roomName": "Test Split",
+          "visibility": "private"
+        }
+      }
+    },
+    {
+      "id": "split-1", 
+      "type": "split",
+      "position": { "x": 250, "y": 200 },
+      "data": {
+        "label": "Split Flow",
+        "type": "split",
+        "config": {
+          "condition": "userCount > 5",
+          "conditionType": "userCount",
+          "branches": [
+            {
+              "name": "Beaucoup d'users",
+              "condition": "> 5",
+              "color": "green"
+            },
+            {
+              "name": "Peu d'users", 
+              "condition": "<= 5",
+              "color": "red"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "msg-branch1",
+      "type": "sendMessage",
+      "position": { "x": 150, "y": 350 },
+      "data": {
+        "label": "Message Grand Groupe",
+        "type": "sendMessage", 
+        "config": {
+          "message": "Salon bien rempli ! 🎉",
+          "format": "plain"
+        }
+      }
+    },
+    {
+      "id": "msg-branch2",
+      "type": "sendMessage", 
+      "position": { "x": 350, "y": 350 },
+      "data": {
+        "label": "Message Petit Groupe",
+        "type": "sendMessage",
+        "config": {
+          "message": "Invitez plus de monde ! 📢",
+          "format": "plain"
+        }
+      }
+    }
+  ],
+  "edges": [
+    { "id": "e1", "source": "start-1", "target": "split-1" },
+    { "id": "e2", "source": "split-1", "target": "msg-branch1" },
+    { "id": "e3", "source": "split-1", "target": "msg-branch2" }
+  ]
+}

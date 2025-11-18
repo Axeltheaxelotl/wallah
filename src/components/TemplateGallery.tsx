@@ -86,6 +86,101 @@ const templates: Template[] = [
     }
   },
   {
+    id: 'split-demo',
+    name: 'Workflow Conditionnel',
+    description: 'Démo du node Split avec branches conditionnelles selon le nombre de membres',
+    icon: Zap,
+    color: 'from-cyan-500 to-cyan-600',
+    workflow: {
+      name: 'Test Split - Branches Conditionnelles',
+      nodes: [
+        {
+          id: 'create-1',
+          type: 'createRoom',
+          position: { x: 250, y: 50 },
+          data: {
+            label: 'Créer Salon Principal',
+            type: 'createRoom',
+            config: {
+              roomName: '🎯 Salon Smart',
+              visibility: 'private',
+              members: ['@alice:matrix.org', '@bob:matrix.org']
+            }
+          }
+        },
+        {
+          id: 'split-1',
+          type: 'split',
+          position: { x: 250, y: 200 },
+          data: {
+            label: 'Split Flow',
+            type: 'split',
+            config: {
+              condition: 'userCount > 10',
+              conditionType: 'userCount',
+              branches: [
+                {
+                  name: 'Grand Groupe',
+                  condition: '> 10',
+                  color: 'green'
+                },
+                {
+                  name: 'Petit Groupe',
+                  condition: '<= 10',
+                  color: 'blue'
+                }
+              ]
+            }
+          }
+        },
+        {
+          id: 'msg-big-1',
+          type: 'sendMessage',
+          position: { x: 100, y: 350 },
+          data: {
+            label: 'Message Grande Équipe',
+            type: 'sendMessage',
+            config: {
+              message: '🎉 **Super !** Nous avons une grande équipe active !\n\nN\'hésitez pas à créer des sous-groupes.',
+              format: 'markdown'
+            }
+          }
+        },
+        {
+          id: 'invite-1',
+          type: 'inviteUser',
+          position: { x: 400, y: 350 },
+          data: {
+            label: 'Inviter Plus de Monde',
+            type: 'inviteUser',
+            config: {
+              userId: '@recruiter:matrix.org'
+            }
+          }
+        },
+        {
+          id: 'msg-small-1',
+          type: 'sendMessage',
+          position: { x: 400, y: 500 },
+          data: {
+            label: 'Encourager Croissance',
+            type: 'sendMessage',
+            config: {
+              message: '📢 Invitez vos collègues pour agrandir notre communauté !',
+              format: 'plain'
+            }
+          }
+        }
+      ],
+      edges: [
+        { id: 'e1', source: 'create-1', target: 'split-1' },
+        { id: 'e2', source: 'split-1', target: 'msg-big-1' },
+        { id: 'e3', source: 'split-1', target: 'invite-1' },
+        { id: 'e4', source: 'invite-1', target: 'msg-small-1' }
+      ]
+    }
+  },
+  {
     id: 'temp-room',
     name: 'Salon Temporaire',
     description: 'Crée un salon qui s\'auto-détruit après 1 heure',
